@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odpočet do Vánoc 🎄</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Sněhové vločky */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff0080;
+            }
+            50% {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff0080, 0 0 40px #ff0080;
+            }
+        }
+
+        .countdown {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            min-width: 150px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .time-box .number {
+            font-size: 4rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .time-box .label {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .message {
+            margin-top: 50px;
+            font-size: 1.5rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .tree {
+            font-size: 5rem;
+            margin-top: 30px;
+            animation: shake 2s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .time-box {
+                min-width: 120px;
+                padding: 20px;
+            }
+
+            .time-box .number {
+                font-size: 2.5rem;
+            }
+
+            .time-box .label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎅 Odpočet do Vánoc 🎅</h1>
+
+        <div class="countdown">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">Dní</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">Hodin</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Minut</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Sekund</span>
+            </div>
+        </div>
+
+        <div class="message" id="message">Připravujeme se na nejkrásnější svátky roku!</div>
+        <div class="tree">🎄</div>
+    </div>
+
+    <script>
+        // Vytvoření sněhových vloček
+        function createSnowflakes() {
+            const snowflakeCount = 50;
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                document.body.appendChild(snowflake);
+            }
+        }
+
+        createSnowflakes();
+
+        // Odpočet do Vánoc
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+
+            // Vánoce jsou 25. prosince
+            let christmas = new Date(currentYear, 11, 25, 0, 0, 0);
+
+            // Pokud už Vánoce letos proběhly, počítáme do příštího roku
+            if (now > christmas) {
+                christmas = new Date(currentYear + 1, 11, 25, 0, 0, 0);
+            }
+
+            const diff = christmas - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                document.getElementById('message').textContent = '🎉 Veselé Vánoce! 🎉';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            // Různé zprávy podle toho, jak jsou Vánoce blízko
+            if (days === 0) {
+                document.getElementById('message').textContent = '🎁 Vánoce jsou tady! 🎁';
+            } else if (days === 1) {
+                document.getElementById('message').textContent = '⭐ Zítra jsou Vánoce! ⭐';
+            } else if (days <= 7) {
+                document.getElementById('message').textContent = '🔔 Vánoce jsou už za týden! 🔔';
+            } else if (days <= 30) {
+                document.getElementById('message').textContent = '🎄 Vánoce se blíží! 🎄';
+            } else {
+                document.getElementById('message').textContent = '❄️ Připravujeme se na nejkrásnější svátky roku! ❄️';
+            }
+        }
+
+        // Aktualizace každou sekundu
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
