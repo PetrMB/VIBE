@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚐 Retro Camper: Euro Trip 2000</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Hlavní menu -->
+        <div id="main-menu" class="screen active">
+            <div class="retro-border">
+                <h1 class="title-glitch">🚐 RETRO CAMPER</h1>
+                <h2 class="subtitle">EURO TRIP 2000</h2>
+                <div class="menu-options">
+                    <button class="retro-button" id="start-game">NOVÁ HRA</button>
+                    <button class="retro-button" id="continue-game" disabled>POKRAČOVAT</button>
+                    <button class="retro-button" id="options">MOŽNOSTI</button>
+                </div>
+                <div class="intro-text">
+                    <p>📸 Projel celou Evropu</p>
+                    <p>🍕 Ochutnej místní speciality</p>
+                    <p>⛽ Dojel do cíle s úsměvem</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Herní canvas -->
+        <div id="game-screen" class="screen">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- HUD (Head-Up Display) -->
+            <div id="hud">
+                <!-- Levý horní roh - Destinace -->
+                <div class="hud-panel top-left">
+                    <div class="destination">
+                        <span class="label">CÍL:</span>
+                        <span id="destination-name">Kemp u jezera</span>
+                        <span id="destination-distance">5.2 km</span>
+                    </div>
+                    <div class="day-counter">
+                        <span class="label">DEN:</span>
+                        <span id="current-day">1</span>/<span id="total-days">14</span>
+                    </div>
+                </div>
+
+                <!-- Pravý horní roh - Sbírky -->
+                <div class="hud-panel top-right">
+                    <div class="collection-item">
+                        <span class="icon">📷</span>
+                        <span id="photos-count">0</span>/<span id="photos-total">7</span>
+                    </div>
+                    <div class="collection-item">
+                        <span class="icon">🥪</span>
+                        <span id="food-count">0</span>/<span id="food-total">5</span>
+                    </div>
+                    <div class="collection-item">
+                        <span class="icon">⛽</span>
+                        <span id="fuel-level">100</span>%
+                    </div>
+                </div>
+
+                <!-- Levý dolní roh - Tachometr a stav -->
+                <div class="hud-panel bottom-left">
+                    <div class="speedometer">
+                        <canvas id="speedo-canvas" width="150" height="150"></canvas>
+                        <div class="speed-text">
+                            <span id="speed-value">0</span>
+                            <span class="unit">km/h</span>
+                        </div>
+                    </div>
+                    <div class="chill-meter">
+                        <span class="label">POHODA:</span>
+                        <div class="meter-bar">
+                            <div id="chill-fill" class="meter-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="damage-indicator">
+                        <span class="label">STAV:</span>
+                        <div class="health-bar">
+                            <div id="health-fill" class="health-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pravý dolní roh - Mini mapa -->
+                <div class="hud-panel bottom-right">
+                    <div class="minimap">
+                        <canvas id="minimap-canvas" width="150" height="150"></canvas>
+                    </div>
+                </div>
+
+                <!-- Notifikace -->
+                <div id="notification" class="notification"></div>
+            </div>
+        </div>
+
+        <!-- Pauza menu -->
+        <div id="pause-menu" class="screen overlay">
+            <div class="retro-border">
+                <h2>PAUZA</h2>
+                <div class="menu-options">
+                    <button class="retro-button" id="resume-game">POKRAČOVAT</button>
+                    <button class="retro-button" id="restart-game">RESTART</button>
+                    <button class="retro-button" id="exit-game">HLAVNÍ MENU</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Album fotografií -->
+        <div id="photo-album" class="screen overlay">
+            <div class="retro-border album-container">
+                <h2>📸 ALBUM FOTOGRAFIÍ</h2>
+                <div id="photo-grid" class="photo-grid"></div>
+                <button class="retro-button" id="close-album">ZAVŘÍT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Herní logika -->
+    <script src="game.js"></script>
+</body>
+</html>
