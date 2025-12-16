@@ -10,11 +10,11 @@ const CONFIG = {
     PIXEL_RATIO: 1, // Retro low-res look
 
     // Fyzika vozu
-    MAX_SPEED: 150,
-    ACCELERATION: 0.5,
-    BRAKE_FORCE: 0.7,
+    MAX_SPEED: 200,
+    ACCELERATION: 0.8,
+    BRAKE_FORCE: 1.0,
     DRIFT_FACTOR: 0.92,
-    TURN_SPEED: 0.03,
+    TURN_SPEED: 0.04,
     WOBBLE_FACTOR: 0.15, // Houpání vozu
 
     // Gameplay
@@ -138,12 +138,12 @@ class RetroCamera {
     }
 
     setupLights() {
-        // Ambientní světlo
-        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        // Ambientní světlo (zvýšené pro lepší viditelnost)
+        const ambient = new THREE.AmbientLight(0xffffff, 0.9);
         this.scene.add(ambient);
 
-        // Slunce
-        const sun = new THREE.DirectionalLight(0xffffee, 0.8);
+        // Slunce (silnější)
+        const sun = new THREE.DirectionalLight(0xffffee, 1.2);
         sun.position.set(50, 100, 50);
         sun.castShadow = true;
         sun.shadow.camera.left = -50;
@@ -153,6 +153,11 @@ class RetroCamera {
         sun.shadow.mapSize.width = 512; // Low-res shadows
         sun.shadow.mapSize.height = 512;
         this.scene.add(sun);
+
+        // Přidáme další světlo shora pro lepší viditelnost
+        const topLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        topLight.position.set(0, 200, 0);
+        this.scene.add(topLight);
     }
 
     updateCameraPosition(target) {
@@ -555,6 +560,7 @@ class Environment {
         switch(this.season) {
             case 'SPRING':
                 this.createCyclists();
+                this.createTractors(); // Farmáři na jaře
                 break;
             case 'SUMMER':
                 this.createVespas();
