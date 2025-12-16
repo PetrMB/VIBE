@@ -10,9 +10,9 @@ const CONFIG = {
     PIXEL_RATIO: 1, // Retro low-res look
 
     // Fyzika vozu
-    MAX_SPEED: 120,
-    ACCELERATION: 0.3,
-    BRAKE_FORCE: 0.5,
+    MAX_SPEED: 150,
+    ACCELERATION: 0.5,
+    BRAKE_FORCE: 0.7,
     DRIFT_FACTOR: 0.92,
     TURN_SPEED: 0.03,
     WOBBLE_FACTOR: 0.15, // Houpání vozu
@@ -253,10 +253,10 @@ class CamperVan {
         let turning = 0;
 
         if (keys['ArrowUp'] || keys['w']) {
-            acceleration = -CONFIG.ACCELERATION;
+            acceleration = CONFIG.ACCELERATION;
         }
         if (keys['ArrowDown'] || keys['s']) {
-            acceleration = CONFIG.BRAKE_FORCE;
+            acceleration = -CONFIG.BRAKE_FORCE;
         }
         if (keys['ArrowLeft'] || keys['a']) {
             turning = CONFIG.TURN_SPEED;
@@ -285,7 +285,7 @@ class CamperVan {
             Math.cos(this.rotation)
         );
 
-        this.mesh.position.add(forward.multiplyScalar(this.velocity.z * deltaTime));
+        this.mesh.position.add(forward.multiplyScalar(-this.velocity.z * deltaTime));
         this.mesh.rotation.y = this.rotation;
 
         // Houpání vozu (wobble effect)
