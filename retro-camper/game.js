@@ -126,6 +126,9 @@ class RetroCamera {
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.BasicShadowMap; // Retro hard shadows
 
+        // DŮLEŽITÉ: Nastavení barvy pozadí (světle modrá obloha)
+        this.renderer.setClearColor(0x87ceeb, 1);
+
         // Izometrický pohled shora
         this.camera.position.set(0, 30, 25);
         this.camera.lookAt(0, 0, 0);
@@ -248,6 +251,9 @@ class CamperVan {
         const stripe = new THREE.Mesh(stripeGeometry, stripeMaterial);
         stripe.position.set(0, 1.5, 0);
         group.add(stripe);
+
+        // Otočit model o 180° aby jel správným směrem
+        group.rotation.y = Math.PI;
 
         return group;
     }
