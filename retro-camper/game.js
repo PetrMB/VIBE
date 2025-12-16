@@ -253,10 +253,10 @@ class CamperVan {
         let turning = 0;
 
         if (keys['ArrowUp'] || keys['w']) {
-            acceleration = CONFIG.ACCELERATION;
+            acceleration = -CONFIG.ACCELERATION;
         }
         if (keys['ArrowDown'] || keys['s']) {
-            acceleration = -CONFIG.BRAKE_FORCE;
+            acceleration = CONFIG.BRAKE_FORCE;
         }
         if (keys['ArrowLeft'] || keys['a']) {
             turning = CONFIG.TURN_SPEED;
